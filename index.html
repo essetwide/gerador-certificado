@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <style>
+            #mainPanel{
+                 width:23px;
+            }
+            .panel{
+                background-color: aliceblue;
+                position: absolute;
+                cursor: pointer;
+                border-radius: 0.5rem;
+                padding: 0.2rem;
+                box-shadow: 3px 3px 8px #888888;
+                position:absolute;
+                cursor:pointer;
+               
+            }
+            #mainPanel img{
+                width: inherit;
+                margin-bottom: 15px;
+            }
+            #mainPanel img:last-child{
+                margin-bottom: 0px;
+            }
+            #mainPanel img:hover{
+                background-color: #d6e7f7;
+            }
+        </style>
+    </head>
+    <body>
+        https://jsfiddle.net/4nzygs8a/<br>
+        http://stackoverflow.com/questions/35630508/add-delete-button-on-element-in-canvas-fabric-js
+        <canvas id="c">
+        </canvas>
+        <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+        <script src="js/fabric.min.js"></script>
+        <script type="text/javascript">
+            var canvas = new fabric.Canvas('c');
+            canvas.setHeight(window.innerHeight);
+            canvas.setWidth(window.innerWidth);
+            //canvas.renderAll();
+            var HideControls = {
+                'tl': true,
+                'tr': false,
+                'bl': true,
+                'br': true,
+                'ml': true,
+                'mt': true,
+                'mr': true,
+                'mb': true,
+                'mtr': true
+            };
+            fabric.Image.fromURL('http://serio.piiym.net/CVBla/txtboard/thumb/1260285874089s.jpg', function (img) {
+                img.top = 60;
+                img.left = 30;
+                img.setControlsVisibility(HideControls);
+                canvas.add(img);
+            });
+
+            canvas.add(new fabric.IText('Tap and Type', {
+                fontFamily: 'arial black',
+                left: 100,
+                top: 100,
+                lockUniScaling: true,
+            }));
+
+            var rect = new fabric.Rect({
+                left: 100,
+                top: 100,
+                fill: 'red',
+                width: 20,
+                height: 20
+            });
+
+            // "add" rectangle onto canvas
+            canvas.add(rect);
+
+            canvas.renderAll();
+
+            
+
+        </script>
+        
+        <script src="js/panelConfig.js"></script>
+    </body>
+</html>

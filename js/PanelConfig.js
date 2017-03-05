@@ -42,6 +42,8 @@ function addTextPanel(x, y) {
 <img src="https://i1.wp.com/www.teclasap.com.br/wp-content/uploads/2015/08/underline-x-underscore.png" id="underlineBtn" style="width: 20px;" />\n\
 <img src="https://image.freepik.com/free-icon/strikethrough-text-formatting_318-40624.jpg" id="strikeBtn" style="width: 20px;" />\n\
 <img src="http://wfarm3.dataknet.com/static/resources/icons/set113/c3d269df.png" id="boldBtn" style="width: 20px;" />\n\
+<img src="http://wfarm3.dataknet.com/static/resources/icons/set113/e94e8793.png" id="italicBtn" style="width: 20px;" />\n\
+<input type="number" id="sizeInp" value="12" min="1" style="width: 40px;" />\n\
 </div>';
     $(".canvas-container").append(panelHTML);
 }
@@ -145,6 +147,21 @@ $(document).on('click', "#boldBtn", function () {
     }
 });
 
+$(document).on('click', "#italicBtn", function () {
+    if (canvas.getActiveObject()) {
+        var value = canvas.getActiveObject().hasStyle('fontStyle', "italic") ? "normal" : "italic";
+        setStyle(canvas.getActiveObject(), 'fontStyle', value);
+    }
+});
+
+$(document).on('change', "#sizeInp", function (evt) {
+    if (canvas.getActiveObject()) {
+       canvas.getActiveObject().setFontSize(fabric.util.parseUnit(evt.target.value+'pt'));
+       canvas.renderAll();
+    }
+});
+
+
 
 //===AUX FUNCTIONS==================================
 function getRandomColor() {
@@ -165,7 +182,6 @@ function setStyle(object, styleName, value) {
         object.clearStyle(styleName);
         object.set(styleName, value);
     }
-    console.log(object);
     canvas.renderAll();
 }
 

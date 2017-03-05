@@ -2,7 +2,7 @@
     <head>
         <style>
             #mainPanel{
-                 width:23px;
+                width:23px;
             }
             .panel{
                 background-color: aliceblue;
@@ -13,7 +13,7 @@
                 box-shadow: 3px 3px 8px #888888;
                 position:absolute;
                 cursor:pointer;
-               
+
             }
             #mainPanel img{
                 width: inherit;
@@ -38,6 +38,7 @@
         crossorigin="anonymous"></script>
         <script src="js/fabric.min.js"></script>
         <script type="text/javascript">
+
             var canvas = new fabric.Canvas('c');
             canvas.setHeight(window.innerHeight);
             canvas.setWidth(window.innerWidth);
@@ -59,7 +60,7 @@
                 img.setControlsVisibility(HideControls);
                 canvas.add(img);
             });
-            
+
             fabric.Image.fromURL('http://serio.piiym.net/CVBla/txtboard/thumb/1260285874089s.jpg', function (img) {
                 img.top = 260;
                 img.left = 230;
@@ -71,6 +72,7 @@
                 fontFamily: 'arial',
                 left: 100,
                 top: 100,
+                fontSize: fabric.util.parseUnit(12 + 'pt'),
                 lockUniScaling: true,
             }));
 
@@ -87,10 +89,10 @@
 
             canvas.renderAll();
 
-            
+
 
         </script>
-        
+
         <script src="js/panelConfig.js"></script>
     </body>
 </html>

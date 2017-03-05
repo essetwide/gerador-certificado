@@ -3,13 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-fabric.Object.prototype.hasTextDecoration = function (e) {
-    if (this.getSelectedText()) {
-        return this.getSelectionStyles().textDecoration === e ? true : false;
-    } else {
-        return this.textDecoration === e ? true : false;
+fabric.Object.prototype.hasStyle = function (styleName, value) {
+    if (this.isEditing) {//Verifica se é o modo de seleção (parte do objeto)[FILHO]
+        if (!jQuery.isEmptyObject(this.getSelectionStyles())) { //Verifica se o FILHO já possui um estilo próprio 
+            if (this.getSelectionStyles()[styleName] === value) { //Se já possui e o estilo é o que será SETADO
+                return true; //O estilo já está setado
+            } else{
+                return false; //O estilo não está setado
+            }
+        } else { //Se o FILHO NÃO tem estilo próprio o PAI responde
+            if (this[styleName] === value) { //Verifica se PAI já está no estilo que será setado 
+                return true; //O estilo já está setado
+            } else {
+                return false; //O estilo não está setado
+            }
+        }
+    } else { //Caso não for modo de seleção (modo edição objeto inteiro) [PAI]
+        return this[styleName] === value ? true : false;
     }
 
+};
+
+fabric.Object.prototype.clearStyle = function (styleName) {
+    for (var line in this.styles) {
+        for (var char in this.styles[line]) {
+            this.styles[line][char][styleName] = "";
+        }
+    }
 };
 
 
@@ -30,10 +50,12 @@ function addMainPanel(x, y) {
     var btnTop = y - 10;
     var panelHTML = '<div id="mainPanel" class="panel" style="top:' + btnTop + 'px;left:' + btnLeft + 'px;" >\n\
         <img src="https://cdn3.iconfinder.com/data/icons/in-and-around-the-house/43/trash_bin-512.png" class="deleteBtn" />';
-    if (canvas.getActiveObject().get('type') !== "image") {
+    var selected = canvas.getActiveObject() || canvas.getActiveGroup();
+    console.log(selected.get('type'));
+    if (selected.get('type') !== "image" && selected.get('type') !== "group") {
         panelHTML += '<img src="http://unowinc.co/wp-content/uploads/2015/02/Home-icon-branding-color-wheel-design.png" id="colorBtn" />';
     }
-    if (canvas.getActiveObject().get('type') === "i-text") {
+    if (selected.get('type') === "i-text") {
         panelHTML += '<img src="http://sfgov.org/sites/default/files/Images/MainPages/Accessibility%20Services/fontsize-icon-darkgray.png" id="textBtn"/>';
     }
 
@@ -103,22 +125,24 @@ $(document).on('click', "#textBtn", function () {
 
 $(document).on('click', "#underlineBtn", function () {
     if (canvas.getActiveObject()) {
-        var value = canvas.getActiveObject().hasTextDecoration("underline") ? " " : "underline";
+        var value = canvas.getActiveObject().hasStyle('textDecoration', "underline") ? '' : "underline";
         setStyle(canvas.getActiveObject(), 'textDecoration', value);
-        canvas.renderAll();
+
     }
 });
 
 $(document).on('click', "#strikeBtn", function () {
     if (canvas.getActiveObject()) {
-        var value = canvas.getActiveObject().hasTextDecoration("line-through") ? " " : "line-through";
+        var value = canvas.getActiveObject().hasStyle('textDecoration', "line-through") ? " " : "line-through";
         setStyle(canvas.getActiveObject(), 'textDecoration', value);
-        canvas.renderAll();
     }
 });
 
 $(document).on('click', "#boldBtn", function () {
-    alert("Implementar");
+    if (canvas.getActiveObject()) {
+        var value = canvas.getActiveObject().hasStyle('fontWeight', "bold") ? "normal" : "bold";
+        setStyle(canvas.getActiveObject(), 'fontWeight', value);
+    }
 });
 
 
@@ -133,11 +157,15 @@ function getRandomColor() {
 }
 
 function setStyle(object, styleName, value) {
-    if (object.setSelectionStyles && object.isEditing && object.getSelectedText()) {
+    if (object.setSelectionStyles && object.isEditing) {
         var style = {};
         style[styleName] = value;
         object.setSelectionStyles(style);
     } else {
-        object[styleName] = value;
+        object.clearStyle(styleName);
+        object.set(styleName, value);
     }
+    console.log(object);
+    canvas.renderAll();
 }
+

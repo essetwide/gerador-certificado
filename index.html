@@ -59,9 +59,16 @@
                 img.setControlsVisibility(HideControls);
                 canvas.add(img);
             });
+            
+            fabric.Image.fromURL('http://serio.piiym.net/CVBla/txtboard/thumb/1260285874089s.jpg', function (img) {
+                img.top = 260;
+                img.left = 230;
+                img.setControlsVisibility(HideControls);
+                canvas.add(img);
+            });
 
             canvas.add(new fabric.IText('Tap and Type', {
-                fontFamily: 'arial black',
+                fontFamily: 'arial',
                 left: 100,
                 top: 100,
                 lockUniScaling: true,

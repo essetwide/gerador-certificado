@@ -8,7 +8,7 @@ fabric.Object.prototype.hasStyle = function (styleName, value) {
         if (!jQuery.isEmptyObject(this.getSelectionStyles())) { //Verifica se o FILHO já possui um estilo próprio 
             if (this.getSelectionStyles()[styleName] === value) { //Se já possui e o estilo é o que será SETADO
                 return true; //O estilo já está setado
-            } else{
+            } else {
                 return false; //O estilo não está setado
             }
         } else { //Se o FILHO NÃO tem estilo próprio o PAI responde
@@ -32,18 +32,16 @@ fabric.Object.prototype.clearStyle = function (styleName) {
     }
 };
 
-
-function addTextPanel(x, y) {
+function addTextPanel(x, y, obj) {
     $("#textPanel").remove();
     var panelLeft = x + 35;
     var panelTop = y;
-    console.log("TOP: " + panelTop + " LEFT: " + panelLeft);
     var panelHTML = '<div id="textPanel" class="panel" style="top:' + panelTop + 'px;left:' + panelLeft + 'px;" >\n\
 <img src="https://i1.wp.com/www.teclasap.com.br/wp-content/uploads/2015/08/underline-x-underscore.png" id="underlineBtn" style="width: 20px;" />\n\
 <img src="https://image.freepik.com/free-icon/strikethrough-text-formatting_318-40624.jpg" id="strikeBtn" style="width: 20px;" />\n\
 <img src="http://wfarm3.dataknet.com/static/resources/icons/set113/c3d269df.png" id="boldBtn" style="width: 20px;" />\n\
 <img src="http://wfarm3.dataknet.com/static/resources/icons/set113/e94e8793.png" id="italicBtn" style="width: 20px;" />\n\
-<input type="number" id="sizeInp" value="12" min="1" style="width: 40px;" />\n\
+<input type="number" id="sizeInp" value="' + fontSizeParser('px', 'pt', obj.fontSize) + '" min="1" style="width: 40px;" />\n\
 </div>';
     $(".canvas-container").append(panelHTML);
 }
@@ -53,7 +51,6 @@ function addMainPanel(x, y) {
     var panelHTML = '<div id="mainPanel" class="panel" style="top:' + btnTop + 'px;left:' + btnLeft + 'px;" >\n\
         <img src="https://cdn3.iconfinder.com/data/icons/in-and-around-the-house/43/trash_bin-512.png" class="deleteBtn" />';
     var selected = canvas.getActiveObject() || canvas.getActiveGroup();
-    console.log(selected.get('type'));
     if (selected.get('type') !== "image" && selected.get('type') !== "group") {
         panelHTML += '<img src="http://unowinc.co/wp-content/uploads/2015/02/Home-icon-branding-color-wheel-design.png" id="colorBtn" />';
     }
@@ -116,13 +113,7 @@ $(document).on('click', "#colorBtn", function () {
 });
 
 $(document).on('click', "#textBtn", function () {
-    addTextPanel($('.panel').position().left, $('.panel').position().top);
-    if (canvas.getActiveObject()) {
-        //canvas.getActiveObject().setScaleX(canvas.getActiveObject().getScaleX() + 0.1);
-        //canvas.getActiveObject().setScaleY(canvas.getActiveObject().getScaleY() + 0.1);
-        //canvas.renderAll();
-
-    }
+    addTextPanel($('.panel').position().left, $('.panel').position().top, canvas.getActiveObject());
 });
 
 $(document).on('click', "#underlineBtn", function () {
@@ -156,8 +147,7 @@ $(document).on('click', "#italicBtn", function () {
 
 $(document).on('change', "#sizeInp", function (evt) {
     if (canvas.getActiveObject()) {
-       canvas.getActiveObject().setFontSize(fabric.util.parseUnit(evt.target.value+'pt'));
-       canvas.renderAll();
+        setStyle(canvas.getActiveObject(), 'fontSize', fabric.util.parseUnit(evt.target.value + 'pt'));
     }
 });
 
@@ -183,5 +173,56 @@ function setStyle(object, styleName, value) {
         object.set(styleName, value);
     }
     canvas.renderAll();
+}
+
+
+
+function fontSizeParser(unitFrom, unitTo, unitFrom_value) {
+    var pixel;
+    switch (unitFrom) {
+        case 'mm':
+            pixel = unitFrom_value * fabric.DPI / 25.4;
+            break;
+        case 'cm':
+            pixel = unitFrom_value * fabric.DPI / 2.54;
+            break;
+        case 'in':
+            pixel = unitFrom_value * fabric.DPI;
+            break;
+        case 'pt':
+            pixel = unitFrom_value * fabric.DPI / 72; // or * 4 / 3
+            break;
+        case 'pc':
+            pixel = unitFrom_value * fabric.DPI / 72 * 12; // or * 16
+            break;
+        case 'em':
+            pixel = unitFrom_value * fontSize;
+            break;
+        case 'px':
+            pixel = unitFrom_value;
+            break;
+        default:
+            return unitFrom_value;
+    }
+    switch (unitTo) {
+        case 'mm':
+            return pixel / fabric.DPI * 25.4;
+        case 'cm':
+            return pixel / fabric.DPI * 2.54;
+        case 'in':
+            return pixel / fabric.DPI;
+        case 'pt':
+            return pixel / fabric.DPI * 72; // or * 4 / 3
+        case 'pc':
+            return pixel / fabric.DPI * 72 / 12; // or * 16
+        case 'em':
+            return pixel / fontSize;
+        case'px':
+            return pixel;
+        default:
+            return unitFrom_value;
+    }
+
+
 }
 

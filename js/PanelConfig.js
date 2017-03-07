@@ -3,6 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
+
 fabric.Object.prototype.hasStyle = function (styleName, value) {
     if (this.isEditing) {//Verifica se é o modo de seleção (parte do objeto)[FILHO]
         if (!jQuery.isEmptyObject(this.getSelectionStyles())) { //Verifica se o FILHO já possui um estilo próprio 
@@ -60,6 +63,27 @@ function addMainPanel(x, y) {
 
     panelHTML += '</div>';
     $(".canvas-container").append(panelHTML);
+    $('#colorBtn').colorPicker({doRender: false,
+        cssAddon: // could also be in a css file instead
+			'.cp-color-picker{background-color:#f0f8ff;box-shadow: 3px 3px 8px #888888;}',
+        renderCallback: function ($elm, toggled) {
+            // 'this': current colorPicker instance; // instance has all kinds of information about colorPicker such as $UI including dimensions etc...
+            // $elm: the input field or other element that just toggled the colorPicker;
+            // toggle -> 'true': just appeared; 'false': just closed; 'undefined': is rendering
+
+            if (canvas.getActiveObject()) {
+                setStyle(canvas.getActiveObject(), 'fill', this.color.colors.HEX);
+                canvas.renderAll();
+            }
+        },
+        positionCallback: function ($elm) {
+            // 'this': current colorPicker instance;
+            // $elm: the input field or other element that just toggled the colorPicker;
+            // optionally...
+            return {top: btnTop + 55, left: btnLeft+45}; // positions colorPicker before appearing
+        },
+
+    });
 }
 
 canvas.on('object:selected', function (e) {
@@ -105,12 +129,13 @@ $(document).on('click', ".deleteBtn", function () {
     $(".panel").remove();
 });
 
-$(document).on('click', "#colorBtn", function () {
-    if (canvas.getActiveObject()) {
-        canvas.getActiveObject().set("fill", getRandomColor());
-        canvas.renderAll();
-    }
-});
+/*$(document).on('click', "#colorBtn", function () {
+ if (canvas.getActiveObject()) {
+ setStyle(canvas.getActiveObject(), 'fill', getRandomColor());
+ // canvas.getActiveObject().set("fill", getRandomColor());
+ canvas.renderAll();
+ }
+ });*/
 
 $(document).on('click', "#textBtn", function () {
     addTextPanel($('.panel').position().left, $('.panel').position().top, canvas.getActiveObject());
@@ -120,7 +145,6 @@ $(document).on('click', "#underlineBtn", function () {
     if (canvas.getActiveObject()) {
         var value = canvas.getActiveObject().hasStyle('textDecoration', "underline") ? '' : "underline";
         setStyle(canvas.getActiveObject(), 'textDecoration', value);
-
     }
 });
 
@@ -171,6 +195,8 @@ function setStyle(object, styleName, value) {
     } else {
         object.clearStyle(styleName);
         object.set(styleName, value);
+        console.log(object);
+        canvas.renderAll();
     }
     canvas.renderAll();
 }

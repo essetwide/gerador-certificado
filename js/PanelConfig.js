@@ -63,27 +63,7 @@ function addMainPanel(x, y) {
 
     panelHTML += '</div>';
     $(".canvas-container").append(panelHTML);
-    $('#colorBtn').colorPicker({doRender: false,
-        cssAddon: // could also be in a css file instead
-			'.cp-color-picker{background-color:#f0f8ff;box-shadow: 3px 3px 8px #888888;}',
-        renderCallback: function ($elm, toggled) {
-            // 'this': current colorPicker instance; // instance has all kinds of information about colorPicker such as $UI including dimensions etc...
-            // $elm: the input field or other element that just toggled the colorPicker;
-            // toggle -> 'true': just appeared; 'false': just closed; 'undefined': is rendering
 
-            if (canvas.getActiveObject()) {
-                setStyle(canvas.getActiveObject(), 'fill', this.color.colors.HEX);
-                canvas.renderAll();
-            }
-        },
-        positionCallback: function ($elm) {
-            // 'this': current colorPicker instance;
-            // $elm: the input field or other element that just toggled the colorPicker;
-            // optionally...
-            return {top: btnTop + 55, left: btnLeft+45}; // positions colorPicker before appearing
-        },
-
-    });
 }
 
 canvas.on('object:selected', function (e) {
@@ -129,16 +109,34 @@ $(document).on('click', ".deleteBtn", function () {
     $(".panel").remove();
 });
 
-/*$(document).on('click', "#colorBtn", function () {
- if (canvas.getActiveObject()) {
- setStyle(canvas.getActiveObject(), 'fill', getRandomColor());
- // canvas.getActiveObject().set("fill", getRandomColor());
- canvas.renderAll();
- }
- });*/
+$(document).on('click', "#colorBtn", function () {
+    var left = $('#mainPanel').position().left;
+    var top = $('#mainPanel').position().top;
+   
+    var teste = $('#mainPanel').colorPicker({doRender: false,
+        cssAddon: // could also be in a css file instead
+			'.cp-color-picker{background-color:#f0f8ff;box-shadow: 3px 3px 8px #888888;}',
+        renderCallback: function ($elm, toggled) {
+            // 'this': current colorPicker instance; // instance has all kinds of information about colorPicker such as $UI including dimensions etc...
+            // $elm: the input field or other element that just toggled the colorPicker;
+            // toggle -> 'true': just appeared; 'false': just closed; 'undefined': is rendering
+            
+            if (canvas.getActiveObject()) {
+                setStyle(canvas.getActiveObject(), 'fill', this.color.colors.HEX);
+            }
+        },
+        positionCallback: function ($elm) {
+            // 'this': current colorPicker instance;
+            // $elm: the input field or other element that just toggled the colorPicker;
+            // optionally...
+            return {top: top + 55, left: left+45}; // positions colorPicker before appearing
+        },
+
+    }).click();
+ });
 
 $(document).on('click', "#textBtn", function () {
-    addTextPanel($('.panel').position().left, $('.panel').position().top, canvas.getActiveObject());
+    addTextPanel($('#mainPanel').position().left, $('#mainPanel').position().top, canvas.getActiveObject());
 });
 
 $(document).on('click', "#underlineBtn", function () {

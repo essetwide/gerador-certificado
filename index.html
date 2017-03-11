@@ -1,31 +1,6 @@
 <html>
     <head>
-        <style>
-            #mainPanel{
-                width:23px;
-            }
-            .panel{
-                background-color: aliceblue;
-                position: absolute;
-                cursor: pointer;
-                border-radius: 0.5rem;
-                padding: 0.2rem;
-                box-shadow: 3px 3px 8px #888888;
-                position:absolute;
-                cursor:pointer;
-
-            }
-            #mainPanel img{
-                width: inherit;
-                margin-bottom: 15px;
-            }
-            #mainPanel img:last-child{
-                margin-bottom: 0px;
-            }
-            #mainPanel img:hover{
-                background-color: #d6e7f7;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
         https://jsfiddle.net/4nzygs8a/<br>
@@ -38,8 +13,9 @@
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
         <script src="js/fabric.min.js"></script>
-        <script type="text/javascript">
 
+        <script type="text/javascript">
+            
             var canvas = new fabric.Canvas('c');
             canvas.setHeight(window.innerHeight);
             canvas.setWidth(window.innerWidth);
@@ -58,11 +34,10 @@
             fabric.Image.fromURL('http://serio.piiym.net/CVBla/txtboard/thumb/1260285874089s.jpg', function (img) {
                 img.top = 60;
                 img.left = 30;
-                img.setControlsVisibility(HideControls);
                 canvas.add(img);
             });
-
-            fabric.Image.fromURL('http://serio.piiym.net/CVBla/txtboard/thumb/1260285874089s.jpg', function (img) {
+            
+           fabric.Image.fromURL('http://serio.piiym.net/CVBla/txtboard/thumb/1260285874089s.jpg', function (img) {
                 img.top = 260;
                 img.left = 230;
                 img.setControlsVisibility(HideControls);
@@ -89,11 +64,10 @@
             canvas.add(rect);
 
             canvas.renderAll();
-
-
+            
 
         </script>
         <script type="text/javascript" src="js/jqColorPicker.min.js"></script>
-        <script src="js/panelConfig.js"></script>
+        <script src="js/geradorCertificado.js"></script>
     </body>
 </html>

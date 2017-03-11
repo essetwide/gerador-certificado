@@ -99,7 +99,7 @@ $(document).on('click', ".deleteBtn", function () {
 
         canvas.getActiveGroup().forEachObject(function (o) {
             console.log(o.get('type'));
-            canvas.remove(o)
+            canvas.remove(o);
         });
         canvas.discardActiveGroup().renderAll();
     } else {
@@ -113,7 +113,7 @@ $(document).on('click', "#colorBtn", function () {
     var left = $('#mainPanel').position().left;
     var top = $('#mainPanel').position().top;
    
-    var teste = $('#mainPanel').colorPicker({ doRender: false,
+   $('#mainPanel').colorPicker({ doRender: false,
 
         cssAddon: '.cp-color-picker{background-color:#f0f8ff;box-shadow: 3px 3px 8px #888888;}',
         
@@ -138,7 +138,8 @@ $(document).on('click', "#colorBtn", function () {
 
     }).click();
  });
-
+ 
+//=====TEXT STYLE BUTTONS=================================
 $(document).on('click', "#textBtn", function () {
     addTextPanel($('#mainPanel').position().left, $('#mainPanel').position().top, canvas.getActiveObject());
 });
@@ -177,18 +178,7 @@ $(document).on('change', "#sizeInp", function (evt) {
     }
 });
 
-
-
 //===AUX FUNCTIONS==================================
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
-
 function setStyle(object, styleName, value) {
     if (object.setSelectionStyles && object.isEditing) {
         var style = {};
@@ -197,11 +187,9 @@ function setStyle(object, styleName, value) {
     } else {
         object.clearStyle(styleName);
         object.set(styleName, value);
-        canvas.renderAll();
     }
+    canvas.renderAll();
 }
-
-
 
 function fontSizeParser(unitFrom, unitTo, unitFrom_value) {
     var pixel;

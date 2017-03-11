@@ -113,16 +113,20 @@ $(document).on('click', "#colorBtn", function () {
     var left = $('#mainPanel').position().left;
     var top = $('#mainPanel').position().top;
    
-    var teste = $('#mainPanel').colorPicker({doRender: false,
-        cssAddon: // could also be in a css file instead
-			'.cp-color-picker{background-color:#f0f8ff;box-shadow: 3px 3px 8px #888888;}',
+    var teste = $('#mainPanel').colorPicker({ doRender: false,
+
+        cssAddon: '.cp-color-picker{background-color:#f0f8ff;box-shadow: 3px 3px 8px #888888;}',
+        
         renderCallback: function ($elm, toggled) {
             // 'this': current colorPicker instance; // instance has all kinds of information about colorPicker such as $UI including dimensions etc...
             // $elm: the input field or other element that just toggled the colorPicker;
             // toggle -> 'true': just appeared; 'false': just closed; 'undefined': is rendering
-            
+             if(toggled){
+             	this.color.setColor(canvas.getActiveObject().getFill(), 'hex'); // set calculated value
+                this.render(); // tell colorPicker to render
+            }
             if (canvas.getActiveObject()) {
-                setStyle(canvas.getActiveObject(), 'fill', this.color.colors.HEX);
+                setStyle(canvas.getActiveObject(), 'fill', '#'+this.color.colors.HEX);
             }
         },
         positionCallback: function ($elm) {
@@ -193,10 +197,8 @@ function setStyle(object, styleName, value) {
     } else {
         object.clearStyle(styleName);
         object.set(styleName, value);
-        console.log(object);
         canvas.renderAll();
     }
-    canvas.renderAll();
 }
 
 

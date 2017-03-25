@@ -11,7 +11,7 @@ gulp.task('components', () => {
             basepath: '@file',
             filters: {
                 min: function(str) {
-                    return "'" + (str.replace(/\n/g, '').replace(/\'/g, '"')) + "'";
+                    return "'" + (str.replace(/\r?\n|\r/g, '').replace(/\'/g, '"')) + "'";
                 }
             }
         }))

@@ -1,0 +1,9 @@
+<div id="main_panel" class="panel" style="top: {{panelTop}}; left: {{panelLeft}}">
+    <img src="https://cdn3.iconfinder.com/data/icons/in-and-around-the-house/43/trash_bin-512.png" id="delete_btn" />
+    {{if type == 'text'}}
+    <img src="http://sfgov.org/sites/default/files/Images/MainPages/Accessibility%20Services/fontsize-icon-darkgray.png" id="text_btn"/>
+    {{fi}}
+    {{if type !== 'image' && type !== 'group'}}
+    <img src="http://unowinc.co/wp-content/uploads/2015/02/Home-icon-branding-color-wheel-design.png" id="color_btn" />
+    {{fi}}
+</div>

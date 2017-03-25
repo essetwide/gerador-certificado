@@ -1,0 +1,28 @@
+{
+  "name": "gerador-certificado",
+  "version": "0.0.1",
+  "description": "",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-file-include": "^1.0.0",
+    "gulp-include": "^2.3.1",
+    "gulp-sourcemaps": "^2.4.1",
+    "live-server": "^1.2.0"
+  },
+  "scripts": {
+    "dist": "gulp",
+    "serve": "gulp live"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oliveira-filipe/gerador-certificado.git"
+  },
+  "author": "Filipe de Oliveira de Freitas; Guilherme Prezzi",
+  "license": "Apache2",
+  "bugs": {
+    "url": "https://github.com/oliveira-filipe/gerador-certificado/issues"
+  },
+  "homepage": "https://github.com/oliveira-filipe/gerador-certificado#readme"
+}

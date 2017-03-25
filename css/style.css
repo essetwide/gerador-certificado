@@ -19,19 +19,21 @@ and open the template in the editor.
 
 }
 
-#mainPanel{
+#main_panel{
     width:23px;
 }
 
-#mainPanel img{
+#main_panel img{
     width: inherit;
+    max-width: 36px;
+    max-height: 36px;
     margin-bottom: 15px;
 }
 
-#mainPanel img:last-child{
+#main_panel img:last-child{
     margin-bottom: 0px;
 }
 
-#mainPanel img:hover{
+#main_panel img:hover{
     background-color: #d6e7f7;
 }

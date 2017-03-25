@@ -28,16 +28,19 @@ gulp.task('main', ['components'], () => {
 
 gulp.task('vendors', () => {
     return gulp.src('lib/vendors.js')
-        .pipe(req())
+        .pipe(fileInclude({
+            prefix: '@@',
+            basepath: '@file'
+        }))
         .pipe(gulp.dest('./dist/'));
 });
 
 
-gulp.task('default', ['vendors', 'main']);
-gulp.task('serve', () => {
-    gulp.watch(['src/**/*.js', 'src/**/*.html', '!src/_*/*.*'], ['default']);
+gulp.task('default', ['main', 'vendors']);
+gulp.task('serve', ['default'], () => {
+    gulp.watch(['src/**/*.js', 'src/**/*.html', '!src/_*/*.*', '!dist/**/*.*'], ['default']);
     liveServer.start({ignore: 'src'});
 });
-gulp.task('watch', () => {
-    gulp.watch(['src/**/*.js', 'src/**/*.html', '!src/_*/*.*'], ['default']);
+gulp.task('watch', ['default'], () => {
+    gulp.watch(['src/**/*.js', 'src/**/*.html', '!src/_*/*.*', '!dist/**/*.*'], ['default']);
 });

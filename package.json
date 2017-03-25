@@ -13,7 +13,8 @@
   },
   "scripts": {
     "dist": "gulp",
-    "serve": "gulp live"
+    "serve": "gulp serve",
+    "watch": "gulp watch"
   },
   "repository": {
     "type": "git",

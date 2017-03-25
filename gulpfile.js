@@ -32,9 +32,12 @@ gulp.task('vendors', () => {
         .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('default', ['vendors', 'main']);
 
-gulp.task('live', () => {
+gulp.task('default', ['vendors', 'main']);
+gulp.task('serve', () => {
     gulp.watch(['src/**/*.js', 'src/**/*.html', '!src/_*/*.*'], ['default']);
     liveServer.start({ignore: 'src'});
+});
+gulp.task('watch', () => {
+    gulp.watch(['src/**/*.js', 'src/**/*.html', '!src/_*/*.*'], ['default']);
 });

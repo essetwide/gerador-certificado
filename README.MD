@@ -1,6 +1,7 @@
 # DEVELOPMENT WORKFLOW
 
 ``` shell
-    $ npm run dist  # for generate dist
-    $ npm run serve # for live-preview your code
+    $ npm install   # for install the compiler
+    $ npm run dist  # for generate the dist
+    $ npm run watch # for runs dist automaticaly when you change your code
 ```

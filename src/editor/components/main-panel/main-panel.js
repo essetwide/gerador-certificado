@@ -13,7 +13,7 @@
          * @param {Fabric.Object} target The target that the render will be inserted for.
          */
         create: function (target) {
-            var panelLeft = target.oCoords.tr.x - 10;
+            var panelLeft = target.oCoords.tr.x + 10;
             var panelTop = target.oCoords.tr.y - 10;
             var type = target.get('type');
 
@@ -63,14 +63,14 @@
                 var mainPanel = $('#main_panel');
 
                 mainPanel.colorPicker({
-                    doRender: false,
+                    doRender: false, //Prevent the default behavior of render the selected color in the parent
                     cssAddon: '.cp-color-picker{background-color:#f0f8ff;box-shadow: 3px 3px 8px #888888;}',
                     renderCallback: function ($elm, toggled) {
                         // 'this': current colorPicker instance; // instance has all kinds of information about colorPicker such as $UI including dimensions etc...
                         // $elm: the input field or other element that just toggled the colorPicker;
                         // toggle -> 'true': just appeared; 'false': just closed; 'undefined': is rendering
                         if (toggled) {
-                            this.color.setColor(canvas.getActiveObject().getFill(), 'hex'); // set calculated value
+                            this.color.setColor(canvas.getActiveObject().getFill(), 'hex'); // Set the current color
                             this.render(); // tell colorPicker to render
                         }
                         if (canvas.getActiveObject()) {

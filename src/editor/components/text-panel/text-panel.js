@@ -37,7 +37,7 @@
                 if (canvas.getActiveObject()) {
                     var value = canvas.getActiveObject().hasStyle('textDecoration', "underline") ? '' : "underline";
                     canvas.getActiveObject().setStyle('textDecoration', value);
-                    canvas.renderAll();
+                    //canvas.renderAll();
                 }
             });
 
@@ -45,7 +45,7 @@
                 if (canvas.getActiveObject()) {
                     var value = canvas.getActiveObject().hasStyle('textDecoration', "line-through") ? " " : "line-through";
                     canvas.getActiveObject().setStyle('textDecoration', value);
-                    canvas.renderAll();
+                   // canvas.renderAll();
                 }
             });
 
@@ -53,7 +53,7 @@
                 if (canvas.getActiveObject()) {
                     var value = canvas.getActiveObject().hasStyle('fontWeight', "bold") ? "normal" : "bold";
                     canvas.getActiveObject().setStyle('fontWeight', value);
-                    canvas.renderAll();
+                   // canvas.renderAll();
                 }
             });
 
@@ -61,14 +61,14 @@
                 if (canvas.getActiveObject()) {
                     var value = canvas.getActiveObject().hasStyle('fontStyle', "italic") ? "normal" : "italic";
                     canvas.getActiveObject().setStyle('fontStyle', value);
-                    canvas.renderAll();
+                  //  canvas.renderAll();
                 }
             });
 
             container.on('change', "#size_inp", function (evt) {
                 if (canvas.getActiveObject()) {
                     canvas.getActiveObject().setStyle('fontSize', fabric.util.parseUnit(evt.target.value + 'pt'));
-                    canvas.renderAll();
+                   // canvas.renderAll();
                 }
             });
         }
